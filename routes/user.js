@@ -4,6 +4,8 @@ const bcrypt   = require('bcrypt');
 // const withAuth = require('../middleware/withAuth');
 // const adminAuth = require('../middleware/adminAuth');
 const User     = require('../db/userModel');
+const auth     = require('../middleware/auth');
+const adminAuth = require('../middleware/adminAuth');
 const router   = express.Router();
 const token_secret = process.env.TOKEN_SECRET;
 
@@ -12,13 +14,13 @@ const token_secret = process.env.TOKEN_SECRET;
  * Checks if the current token is valid.
  * Used for protecting React Routes.
  */
-// router.get('/checkToken', withAuth, (req, res) => {
-//   res.json({auth: true, loggedIn: true});
-// });
+router.get('/checkToken', auth, (req, res) => {
+  res.json({auth: true, loggedIn: true});
+});
 
-// router.get('/checkAdminAuth', adminAuth, (req, res) => {
-//   res.json({auth: true});
-// });
+router.get('/checkAdminAuth', adminAuth, (req, res) => {
+  res.json({auth: true});
+});
 
 // router.get('/myAccount', withAuth, async (req, res) => {
 //   const user = await User.findOne({email: req.email}).select(["-password", "-role", "-confirmed"]);
